@@ -1,1 +1,1 @@
-# raspberry-docker-gitlab
+# rpi-docker-gitlab-ce
