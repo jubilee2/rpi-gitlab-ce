@@ -19,3 +19,5 @@ sudo docker run --detach \
     --volume /srv/gitlab/data:/var/opt/gitlab \
     jubilee2/rpi-gitlab-ce:latest
 ```
+
+[More Documents!](https://docs.gitlab.com/omnibus/docker/)
