@@ -1,5 +1,12 @@
 # rpi-docker-gitlab-ce
 
+Build image:
+```bash
+sudo docker build .
+sudo docker tag 3468f4e6a05c jubilee2/rpi-gitlab-ce:latest
+```
+
+
 Run the image:
 ```bash
 sudo docker run --detach \
