@@ -19,6 +19,10 @@ RUN wget -q -O - https://packages.gitlab.com/gpg.key | apt-key add -
 RUN curl -sS https://packages.gitlab.com/install/repositories/gitlab/raspberry-pi2/script.deb.sh | bash
 RUN apt-get update && apt-get install -yq --no-install-recommends gitlab-ce
 
+# Copy assets
+COPY assets/ /assets/
+RUN /assets/setup
+
 # Manage SSHD through runit
 RUN mkdir -p /opt/gitlab/sv/sshd/supervise \
     && mkfifo /opt/gitlab/sv/sshd/supervise/ok \
