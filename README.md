@@ -26,8 +26,7 @@ br-475dbcd287db will different
 
 Build image:
 ```bash
-sudo docker build .
-sudo docker tag 3468f4e6a05c jubilee2/rpi-gitlab-ce:latest
+sudo docker build -t gitlab-ce .
 ```
 
 
