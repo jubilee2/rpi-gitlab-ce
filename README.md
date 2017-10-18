@@ -1,6 +1,6 @@
 # rpi-docker-gitlab-ce
 
-Raspberry install Docker
+## Raspberry install Docker
 ```
 curl -sSL https://get.docker.com | sh
 ```
@@ -24,13 +24,13 @@ sudo ip a del 192.168.1.200/24 dev br-475dbcd287db
 ```
 br-475dbcd287db will different
 
-Build image:
+## Build image:
 ```bash
 sudo docker build -t gitlab-ce .
 ```
 
 
-Run the image:
+## Run the image:
 ```bash
 sudo docker run --detach \
     --hostname gitlab.rpi3.local \
@@ -40,7 +40,7 @@ sudo docker run --detach \
     --volume /srv/gitlab/config:/etc/gitlab \
     --volume /srv/gitlab/logs:/var/log/gitlab \
     --volume /srv/gitlab/data:/var/opt/gitlab \
-    jubilee2/rpi-gitlab-ce:latest
+    gitlab-ce:latest
 ```
 
 [More Documents!](https://docs.gitlab.com/omnibus/docker/)
