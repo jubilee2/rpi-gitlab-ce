@@ -1,5 +1,33 @@
 #!/bin/bash
 
+set -xe
+
+source /RELEASE
+DISTRIB_CODENAME=jessie
+
+# Download & Install GitLab
+wget -q -O - https://packages.gitlab.com/gpg.key | apt-key add -
+curl -s https://packages.gitlab.com/install/repositories/gitlab/raspberry-pi2/script.deb.sh | bash
+apt-get update
+apt-get install -yq --no-install-recommends ${RELEASE_PACKAGE}
+rm -rf /var/lib/apt/lists/*
+
+# Create sshd daemon
+mkdir -p /opt/gitlab/sv/sshd/supervise /opt/gitlab/sv/sshd/log/supervise
+mkfifo /opt/gitlab/sv/sshd/supervise/ok /opt/gitlab/sv/sshd/log/supervise/ok
+printf "#!/bin/sh\nexec 2>&1\numask 077\nexec /usr/sbin/sshd -D -f /assets/sshd_config -e" > /opt/gitlab/sv/sshd/run
+printf "#!/bin/sh\nexec svlogd -tt /var/log/gitlab/sshd" > /opt/gitlab/sv/sshd/log/run
+chmod a+x /opt/gitlab/sv/sshd/run /opt/gitlab/sv/sshd/log/run
+mkdir -p /var/run/sshd
+
+# Remove current gitlab.rb file
+rm -f /etc/gitlab/gitlab.rb
+
+# Patch omnibus package
+sed -i "s/external_url 'GENERATED_EXTERNAL_URL'/# external_url 'GENERATED_EXTERNAL_URL'/" /opt/gitlab/etc/gitlab.rb.template
+sed -i "s/\/etc\/gitlab\/gitlab.rb/\/assets\/gitlab.rb/" /opt/gitlab/embedded/cookbooks/gitlab/recipes/show_config.rb
+sed -i "s/\/etc\/gitlab\/gitlab.rb/\/assets\/gitlab.rb/" /opt/gitlab/embedded/cookbooks/gitlab/recipes/config.rb
+
 # Create groups
 groupadd -g 998 git
 groupadd -g 999 gitlab-www

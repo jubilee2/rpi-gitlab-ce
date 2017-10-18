@@ -1,5 +1,7 @@
-FROM resin/rpi-raspbian:jessie
+FROM armhf/debian:jessie
 MAINTAINER Jubilee Tan
+
+SHELL ["/bin/sh", "-c"],
 
 # Install required packages
 RUN apt-get update -q \
@@ -9,42 +11,26 @@ RUN apt-get update -q \
       wget \
       apt-transport-https \
       vim \
+      tzdata \
       nano \
-      curl
+      curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && sed 's/session\s*required\s*pam_loginuid.so/session optional pam_loginuid.so/g' -i /etc/pam.d/sshd
 
-# Download & Install GitLab
-# If you run GitLab Enterprise Edition point it to a location where you have downloaded it.
-# RUN echo "deb https://packages.gitlab.com/gitlab/gitlab-ce/ubuntu/ `lsb_release -cs` main" > /etc/apt/sources.list.d/gitlab_gitlab-ce.list
-RUN wget -q -O - https://packages.gitlab.com/gpg.key | apt-key add -
-RUN curl -sS https://packages.gitlab.com/install/repositories/gitlab/raspberry-pi2/script.deb.sh | bash
-RUN apt-get update && apt-get install -yq --no-install-recommends gitlab-ce
+# Remove MOTD
+RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic
+RUN ln -fs /dev/null /run/motd.dynamic
 
 # Copy assets
+COPY RELEASE /
 COPY assets/ /assets/
 RUN /assets/setup
 
-# Manage SSHD through runit
-RUN mkdir -p /opt/gitlab/sv/sshd/supervise \
-    && mkfifo /opt/gitlab/sv/sshd/supervise/ok \
-    && printf "#!/bin/sh\nexec 2>&1\numask 077\nexec /usr/sbin/sshd -D" > /opt/gitlab/sv/sshd/run \
-    && chmod a+x /opt/gitlab/sv/sshd/run \
-    && ln -s /opt/gitlab/sv/sshd /opt/gitlab/service \
-    && mkdir -p /var/run/sshd
+# Allow to access embedded tools
+ENV PATH /opt/gitlab/embedded/bin:/opt/gitlab/bin:/assets:$PATH
 
-# Disabling use DNS in ssh since it tends to slow connecting
-RUN echo "UseDNS no" >> /etc/ssh/sshd_config
-
-# Prepare default configuration
-RUN ( \
-  echo "" && \
-  echo "# Docker options" && \
-  echo "# Prevent Postgres from trying to allocate 25% of total memory" && \
-  echo "postgresql['shared_buffers'] = '1MB'" && \
-  echo "" && \
-  echo "# Raspberry Pi options" && \
-  echo "" ) >> /etc/gitlab/gitlab.rb && \
-  mkdir -p /assets/ && \
-  cp /etc/gitlab/gitlab.rb /assets/gitlab.rb
+# Resolve error: TERM environment variable not set.
+ENV TERM xterm
 
 # Expose web & ssh
 EXPOSE 443 80 22
@@ -52,8 +38,8 @@ EXPOSE 443 80 22
 # Define data volumes
 VOLUME ["/etc/gitlab", "/var/opt/gitlab", "/var/log/gitlab"]
 
-# Copy assets
-COPY assets/wrapper /usr/local/bin/
-
 # Wrapper to handle signal, trigger runit and reconfigure GitLab
-CMD ["/usr/local/bin/wrapper"]
+CMD ["/assets/wrapper"]
+
+HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
+CMD /opt/gitlab/bin/gitlab-healthcheck --fail
