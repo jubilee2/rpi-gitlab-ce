@@ -1,5 +1,29 @@
 # rpi-docker-gitlab-ce
 
+Raspberry install Docker
+```
+curl -sSL https://get.docker.com | sh
+```
+install brctl
+```
+sudo apt-get install bridge-utils 
+```
+
+check docker version > 1.10
+```
+sudo docker version
+```
+
+
+Setup internet
+```
+sudo docker network create --subnet 192.168.1.0/24 --aux-address "DefaultGatewayIPv4=192.168.1.1" --gateway=192.168.1.200 homebr0
+brctl show
+sudo brctl addif br-475dbcd287db eth0
+sudo ip a del 192.168.1.200/24 dev br-475dbcd287db
+```
+br-475dbcd287db will different
+
 Build image:
 ```bash
 sudo docker build .
