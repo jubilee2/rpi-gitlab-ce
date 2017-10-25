@@ -1,4 +1,4 @@
-# rpi-docker-gitlab-ce
+# rpi-gitlab-ce
 
 ## Raspberry install Docker
 ```
