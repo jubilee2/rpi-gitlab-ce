@@ -26,6 +26,9 @@ br-475dbcd287db will different
 
 ## Build image:
 ```bash
+sudo apt-get install git 
+git clone https://github.com/jubilee2/rpi-gitlab-ce.git
+cd rpi-gitlab-ce
 sudo docker build -t gitlab-ce .
 ```
 
@@ -33,7 +36,7 @@ sudo docker build -t gitlab-ce .
 ## Run the image:
 ```bash
 sudo docker run --detach \
-    --hostname gitlab.rpi3.local \
+    --hostname IP \
     --publish 443:443 --publish 80:80 --publish 22:22 \
     --name gitlab \
     --restart always \
