@@ -1,4 +1,8 @@
 # rpi-gitlab-ce
+the Dockerfile base on https://gitlab.com/gitlab-org/omnibus-gitlab/tree/master/docker
+and make some change for raspberry Pi
+
+I suggest enable the [zram](http://yulun.me/2015/enable-zram-for-raspberry-pi-debian/) to increase performance.
 
 ## Install Docker on Raspberry Pi
 ```
