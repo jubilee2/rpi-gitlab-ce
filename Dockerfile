@@ -1,4 +1,4 @@
-FROM armhf/debian:jessie
+FROM resin/rpi-raspbian:jessie-20171129
 MAINTAINER Jubilee Tan
 
 SHELL ["/bin/sh", "-c"],
