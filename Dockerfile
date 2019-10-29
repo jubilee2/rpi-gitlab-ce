@@ -3,6 +3,9 @@ MAINTAINER Jubilee Tan
 
 SHELL ["/bin/sh", "-c"],
 
+# Default to supporting utf-8
+ENV LANG=C.UTF-8
+
 # Install required packages
 RUN apt-get update -q \
     && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
@@ -42,4 +45,4 @@ VOLUME ["/etc/gitlab", "/var/opt/gitlab", "/var/log/gitlab"]
 CMD ["/assets/wrapper"]
 
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
-CMD /opt/gitlab/bin/gitlab-healthcheck --fail
+CMD /opt/gitlab/bin/gitlab-healthcheck --fail --max-time 10

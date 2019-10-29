@@ -4,9 +4,8 @@ set -xe
 
 source /RELEASE
 
-# Download & Install GitLab
-curl -s https://packages.gitlab.com/install/repositories/gitlab/raspberry-pi2/script.deb.sh | bash
-apt-get install -yq --no-install-recommends ${RELEASE_PACKAGE}=${RELEASE_VERSION}
+# Install GitLab
+DOWNLOAD_URL=${DOWNLOAD_URL} TRIGGER_PRIVATE_TOKEN=${TRIGGER_PRIVATE_TOKEN} /assets/download-package && dpkg -i /tmp/gitlab.deb && rm /tmp/gitlab.deb
 rm -rf /var/lib/apt/lists/*
 
 # Create sshd daemon
