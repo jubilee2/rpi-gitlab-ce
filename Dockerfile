@@ -1,4 +1,4 @@
-FROM resin/rpi-raspbian:stretch-20190121
+FROM balenalib/raspberrypi3:stretch-20190920
 MAINTAINER Jubilee Tan
 
 SHELL ["/bin/sh", "-c"],

@@ -21,7 +21,7 @@ sudo docker run --detach \
     --volume /srv/gitlab/config:/etc/gitlab \
     --volume /srv/gitlab/logs:/var/log/gitlab \
     --volume /srv/gitlab/data:/var/opt/gitlab \
-    jubilee2/rpi-gitlab-ce:v11.10.4
+    jubilee2/rpi-gitlab-ce:v12.4.1
 ```
 
 ## Method 2 build image by your self
