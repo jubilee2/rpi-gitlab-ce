@@ -1,4 +1,4 @@
 PACKAGECLOUD_REPO=raspberry-pi2
 RELEASE_PACKAGE=gitlab-ce
-RELEASE_VERSION=12.4.5-ce.0
+RELEASE_VERSION=12.5.4-ce.0
 DOWNLOAD_URL=https://packages.gitlab.com/gitlab/${PACKAGECLOUD_REPO}/packages/raspbian/stretch/${RELEASE_PACKAGE}_${RELEASE_VERSION}_armhf.deb/download.deb
