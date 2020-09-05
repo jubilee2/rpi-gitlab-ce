@@ -26,7 +26,7 @@ from_file("/etc/gitlab/gitlab.rb")
 ###! Minimum worker_processes is 2 at this moment
 ###! See https://docs.gitlab.com/omnibus/settings/rpi.html
 # Reduce the number of running workers to the minimum in order to reduce memory usage
-unicorn['worker_processes'] = 2
+puma['worker_processes'] = 2
 sidekiq['concurrency'] = 9
 
 # Turn off monitoring to reduce idle cpu and disk usage
