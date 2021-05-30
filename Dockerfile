@@ -12,15 +12,11 @@ RUN apt-get update -q \
       ca-certificates \
       openssh-server \
       wget \
-      apt-transport-https \
       vim \
       tzdata \
       nano \
-      curl \
-      libatomic1 \
       less \
-    && rm -rf /var/lib/apt/lists/* \
-    && sed 's/session\s*required\s*pam_loginuid.so/session optional pam_loginuid.so/g' -i /etc/pam.d/sshd
+    && rm -rf /var/lib/apt/lists/*
 
 # Remove MOTD
 RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic
@@ -29,7 +25,10 @@ RUN ln -fs /dev/null /run/motd.dynamic
 # Copy assets
 COPY RELEASE /
 COPY assets/ /assets/
-RUN /assets/setup
+# as gitlab-ci checks out with mode 666 we need to set permissions of the files we copied into the
+# container to a secure value. Issue #5956
+RUN chmod -R og-w /assets RELEASE ; \
+  /assets/setup
 
 # Allow to access embedded tools
 ENV PATH /opt/gitlab/embedded/bin:/opt/gitlab/bin:/assets:$PATH
