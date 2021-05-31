@@ -16,6 +16,7 @@ RUN apt-get update -q \
       tzdata \
       nano \
       less \
+      libatomic1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Remove MOTD
