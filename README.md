@@ -52,4 +52,5 @@ I observe this error occurred [link](https://gitlab.com/gitlab-org/omnibus-gitla
 
 
 [More Documents!](https://docs.gitlab.com/omnibus/docker/)
-The latest docker guide can be found here: [GitLab Docker images](/doc/docker/README.md).
+
+The latest docker guide can be found here: [GitLab Docker images](https://gitlab.com/gitlab-org/omnibus-gitlab/-/blob/master/doc/docker/README.md).
