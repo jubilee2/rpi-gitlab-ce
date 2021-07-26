@@ -12,11 +12,21 @@ jobs:
         uses: actions/checkout@v2
       -
         name: Set up QEMU
-        id: qemu
         uses: docker/setup-qemu-action@v1
-        with:
-          image: tonistiigi/binfmt:latest
-          platforms: all
       -
-        name: Available platforms
-        run: echo ${{ steps.qemu.outputs.platforms }}
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: jubilee2
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/arm/v7
+          push: true
+          tags: jubilee2/rpi-gitlab-ce:nightly
