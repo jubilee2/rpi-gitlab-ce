@@ -10,6 +10,10 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
+      - 
+        name: Get tag
+        id: tag
+        uses: dawidd6/action-get-tag@v1
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -30,3 +34,6 @@ jobs:
           platforms: linux/arm/v7
           push: true
           tags: jubilee2/rpi-gitlab-ce:nightly
+          cache-from: type=registry,ref=jubilee2/rpi-gitlab-ce:nightly
+          cache-to: type=inline
+
