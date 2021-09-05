@@ -35,7 +35,7 @@ jobs:
           context: .
           platforms: linux/arm/v7
           push: true
-          tags: jubilee2/rpi-gitlab-ce:${{steps.tag.outputs.tag}}
+          tags: jubilee2/rpi-gitlab-ce:latest,jubilee2/rpi-gitlab-ce:${{steps.tag.outputs.tag}}
           cache-from: type=registry,ref=jubilee2/rpi-gitlab-ce:nightly
           cache-to: type=inline
 
