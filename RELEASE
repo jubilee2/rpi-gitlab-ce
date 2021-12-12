@@ -1,4 +1,4 @@
 PACKAGECLOUD_REPO=raspberry-pi2
 RELEASE_PACKAGE=gitlab-ce
-RELEASE_VERSION=14.4.2-ce.0
+RELEASE_VERSION=14.4.4-ce.0
 DOWNLOAD_URL=https://packages.gitlab.com/gitlab/${PACKAGECLOUD_REPO}/packages/raspbian/buster/${RELEASE_PACKAGE}_${RELEASE_VERSION}_armhf.deb/download.deb
