@@ -15,6 +15,7 @@ RUN apt-get update -q \
       wget \
       tzdata \
       libatomic1 \
+      perl \
     && rm -rf /var/lib/apt/lists/*
 
 # Use BusyBox
