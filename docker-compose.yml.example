@@ -1,5 +1,6 @@
 web:
   image: 'jubilee2/rpi-gitlab-ce:latest'
+  platform: linux/arm/v7
   restart: always
   hostname: 'gitlab.example.com'
   environment:
