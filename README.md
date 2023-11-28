@@ -27,7 +27,7 @@ sudo docker run --detach \
 ## Method 2 build image by your self
 ### Build Gitlab image:
 ```bash
-sudo apt-get install git 
+sudo apt-get install git
 git clone https://github.com/jubilee2/rpi-gitlab-ce.git
 cd rpi-gitlab-ce
 sudo docker build -t gitlab-ce .
@@ -53,4 +53,4 @@ I observe this error occurred [link](https://gitlab.com/gitlab-org/omnibus-gitla
 
 [More Documents!](https://docs.gitlab.com/omnibus/docker/)
 
-The latest docker guide can be found here: [GitLab Docker images](https://gitlab.com/gitlab-org/omnibus-gitlab/-/blob/master/doc/docker/README.md).
+The latest Docker guide can be found here: [GitLab Docker images](https://docs.gitlab.com/ee/install/docker.html).
