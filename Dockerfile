@@ -12,8 +12,8 @@ RUN apt-get update -q \
       busybox \
       ca-certificates \
       openssh-server \
-      wget \
       tzdata \
+      wget \
       libatomic1 \
       perl \
     && rm -rf /var/lib/apt/lists/*
