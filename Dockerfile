@@ -20,7 +20,7 @@ RUN apt-get update -q \
       wget \
       libatomic1 \
       perl \
-      libperl5.34 \
+      libperl5.32 \
     && locale-gen \
     && cp -a /usr/lib/locale/locale-archive /tmp/locale-archive \
     && DEBIAN_FRONTEND=noninteractive apt-get purge -yq locales \
