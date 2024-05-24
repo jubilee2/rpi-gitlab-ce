@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 MAINTAINER Jubilee Tan
 
 SHELL ["/bin/sh", "-c"]
