@@ -1,4 +1,10 @@
 # rpi-gitlab-ce
+
+**Project status: read-only**
+
+GitLab now officially supports ARM64 Docker images: https://hub.docker.com/r/gitlab/gitlab-ce
+Because of that, this repository is now in **read-only mode** and will not receive further updates.
+
 the Dockerfile base on https://gitlab.com/gitlab-org/omnibus-gitlab/tree/master/docker
 and make some change for raspberry Pi
 
