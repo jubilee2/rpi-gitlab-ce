@@ -1,5 +1,8 @@
 FROM debian:bullseye
-MAINTAINER Jubilee Tan
+
+LABEL org.opencontainers.image.authors="Jubilee Tan" \
+      org.opencontainers.image.documentation="https://docs.gitlab.com/ee/install/docker/" \
+      org.opencontainers.image.base.name="debian:bullseye"
 
 SHELL ["/bin/sh", "-c"]
 
