@@ -2,6 +2,7 @@
 unless ENV['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'].nil?
   [gitlab_workhorse['env'], gitlab_pages['env'], registry['env'], gitlab_rails['env']].each do |new_env|
     new_env['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = ENV['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI']
+    new_env['AWS_DEFAULT_REGION'] = ENV['AWS_DEFAULT_REGION']
     new_env['AWS_REGION'] = ENV['AWS_REGION']
     new_env['ECS_CONTAINER_METADATA_URI_V4'] = ENV['ECS_CONTAINER_METADATA_URI_V4'] unless ENV['ECS_CONTAINER_METADATA_URI_V4'].nil?
     new_env['ECS_CONTAINER_METADATA_URI'] = ENV['ECS_CONTAINER_METADATA_URI']
@@ -10,7 +11,7 @@ end
 
 # Docker options
 ## Prevent Postgres from trying to allocate 25% of total memory
-postgresql['shared_buffers'] = '1MB'
+postgresql['shared_buffers'] = '256MB'
 
 # Disable Prometheus node_exporter inside Docker.
 node_exporter['enable'] = false
