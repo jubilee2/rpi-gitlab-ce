@@ -20,6 +20,10 @@ RUN apt-get update -q \
       wget \
       libatomic1 \
       perl \
+    && locale-gen \
+    && cp -a /usr/lib/locale/locale-archive /tmp/locale-archive \
+    && DEBIAN_FRONTEND=noninteractive apt-get purge -yq locales \
+    && mv /tmp/locale-archive /usr/lib/locale/locale-archive \
     && rm -rf /var/lib/apt/lists/*
 
 # Use BusyBox
