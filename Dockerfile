@@ -6,11 +6,15 @@ SHELL ["/bin/sh", "-c"]
 # Default to supporting utf-8
 ENV LANG=C.UTF-8
 
+# Explicitly set supported locales
+COPY locale.gen /etc/locale.gen
+
 # Install required packages
 RUN apt-get update -q \
     && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
       busybox \
       ca-certificates \
+      locales \
       openssh-server \
       tzdata \
       wget \
