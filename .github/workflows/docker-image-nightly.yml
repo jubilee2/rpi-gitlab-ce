@@ -26,7 +26,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: linux/arm/v7
+          platforms: linux/arm64
           push: true
           tags: jubilee2/rpi-gitlab-ce:nightly
           cache-from: type=registry,ref=jubilee2/rpi-gitlab-ce:nightly
