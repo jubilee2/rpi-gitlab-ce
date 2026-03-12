@@ -1,5 +1,5 @@
 FROM gitlab/gitlab-ce:18.2.8-ce.0
-MAINTAINER Jubilee Tan
+LABEL maintainer="Jubilee Tan"
 
 COPY assets/gitlab.rb /assets/gitlab.rb
 # as gitlab-ci checks out with mode 666 we need to set permissions of the files we copied into the
