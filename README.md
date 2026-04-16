@@ -13,7 +13,7 @@ If you are running GitLab 17 on armhf hardware, you cannot perform an in-place u
 
 1. Create a backup on your GitLab 17 instance.
 2. Move that backup to a machine that can run an x64 GitLab container.
-3. Restore the backup to a matching GitLab 17 instance on the x64 machine, then upgrade that instance to GitLab 18.2.
+3. Restore the backup to an x64 container running the same GitLab version, then upgrade it to GitLab 18.2.
 4. Create a new backup from the upgraded 18.2 instance.
 5. Restore that backup on your Raspberry Pi deployment using a GitLab CE 18.2 arm64 container.
 
