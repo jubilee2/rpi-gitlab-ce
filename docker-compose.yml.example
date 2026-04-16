@@ -7,6 +7,7 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://gitlab.example.com'
         ###! See https://docs.gitlab.com/omnibus/settings/rpi.html
+        ###! See also https://docs.gitlab.com/omnibus/settings/memory_constrained_envs/
         # Reduce the number of running workers to the minimum in order to reduce memory usage
         puma['worker_processes'] = 0
         sidekiq['concurrency'] = 5

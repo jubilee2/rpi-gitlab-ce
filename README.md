@@ -5,6 +5,20 @@
 GitLab now officially supports ARM64 Docker images: https://hub.docker.com/r/gitlab/gitlab-ce
 Because of that, this repository is now in **read-only mode** and will not receive further updates.
 
+## Important note about GitLab 18 and CPU architecture
+
+GitLab 18 no longer provides the old **armhf** image variant. From GitLab 18 onward, the official ARM container support is **arm64**.
+
+If you are currently running GitLab 17 on armhf hardware, you cannot do an in-place package/image upgrade to GitLab 18 on the same armhf environment because the CPU architecture changed. A practical migration path is:
+
+1. Create a GitLab backup on your GitLab 17 instance.
+2. Move that backup to a machine that can run an x64 GitLab container.
+3. Restore the backup there and upgrade to GitLab 18.2.
+4. Create a new backup from the upgraded 18.2 instance.
+5. Restore that backup on your Raspberry Pi deployment using a GitLab CE 18.2 arm64 container.
+
+This architecture transition is one more reason this repository is not being updated further.
+
 the Dockerfile base on https://gitlab.com/gitlab-org/omnibus-gitlab/tree/master/docker
 and make some change for raspberry Pi
 
@@ -60,3 +74,6 @@ I observe this error occurred [link](https://gitlab.com/gitlab-org/omnibus-gitla
 [More Documents!](https://docs.gitlab.com/omnibus/docker/)
 
 The latest Docker guide can be found here: [GitLab Docker images](https://docs.gitlab.com/ee/install/docker.html).
+
+For low-hardware deployments, also review GitLab's official memory-constrained guidance:
+[Memory-constrained environments](https://docs.gitlab.com/omnibus/settings/memory_constrained_envs/).
