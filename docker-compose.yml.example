@@ -1,11 +1,17 @@
 web:
-  image: 'jubilee2/rpi-gitlab-ce:latest'
-  platform: linux/arm/v7
+  image: 'gitlab/gitlab-ce:18.2.8-ce.0'
   restart: always
   hostname: 'gitlab.example.com'
   environment:
     GITLAB_OMNIBUS_CONFIG: |
       external_url 'https://gitlab.example.com'
+      ###! See https://docs.gitlab.com/omnibus/settings/rpi.html
+      # Reduce the number of running workers to the minimum in order to reduce memory usage
+      puma['worker_processes'] = 2
+      sidekiq['concurrency'] = 5
+      
+      # Turn off monitoring to reduce idle cpu and disk usage
+      prometheus_monitoring['enable'] = false
   ports:
     - '80:80'
     - '443:443'
