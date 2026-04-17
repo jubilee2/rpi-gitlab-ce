@@ -212,3 +212,61 @@ docker exec -it <x64-container-name> gitlab-backup create
 docker exec -it <arm64-container-name> gitlab-backup restore BACKUP=<backup_timestamp>
 ```
 
+---
+
+## 7) Real-world command log example (local → remote → local)
+
+If you prefer concrete commands, this is a cleaned-up version of an actual successful flow using container `rpi-gitlab-ce-web-1`.
+
+> Notes:
+>
+> - Replace hostnames/IPs and usernames (`jubilee2`, `192.168.1.91`) with your values.
+> - Replace backup filenames with the ones created on your run.
+> - `gitlab-backup restore` prompts for confirmation unless you set `GITLAB_ASSUME_YES=1`.
+
+### A) Create backup on source machine and pull it out of container
+
+```bash
+docker exec -t rpi-gitlab-ce-web-1 gitlab-backup create
+sudo docker cp rpi-gitlab-ce-web-1:/var/opt/gitlab/backups/1776397105_2026_04_17_17.11.7_gitlab_backup.tar .
+sudo chown jubilee2 1776397105_2026_04_17_17.11.7_gitlab_backup.tar
+```
+
+### B) Transfer backup to the target host and place it in GitLab backup path
+
+```bash
+scp 1776397105_2026_04_17_17.11.7_gitlab_backup.tar 192.168.1.91:~/
+# on target host:
+cp 1776397105_2026_04_17_17.11.7_gitlab_backup.tar /srv/gitlab/data/backups/
+docker exec -it rpi-gitlab-ce-web-1 chown git:git /var/opt/gitlab/backups/1776397105_2026_04_17_17.11.7_gitlab_backup.tar
+```
+
+### C) Restore that backup on target host
+
+```bash
+docker exec -it rpi-gitlab-ce-web-1 bash
+GITLAB_ASSUME_YES=1 gitlab-backup restore
+```
+
+You can also run restore directly without opening an interactive shell:
+
+```bash
+docker exec -it rpi-gitlab-ce-web-1 sh -lc 'GITLAB_ASSUME_YES=1 gitlab-backup restore'
+```
+
+### D) After upgrade, create a new backup and send it back
+
+```bash
+docker exec -t rpi-gitlab-ce-web-1 gitlab-backup create
+sudo docker cp rpi-gitlab-ce-web-1:/var/opt/gitlab/backups/1776400425_2026_04_17_18.2.8_gitlab_backup.tar .
+sudo chown jubilee2 1776400425_2026_04_17_18.2.8_gitlab_backup.tar
+scp 1776400425_2026_04_17_18.2.8_gitlab_backup.tar 192.168.1.91:~/
+```
+
+### E) Final restore on destination machine
+
+```bash
+sudo cp 1776400425_2026_04_17_18.2.8_gitlab_backup.tar /srv/gitlab/data/backups/
+sudo docker exec -it rpi-gitlab-ce-web-1 chown git:git /var/opt/gitlab/backups/1776400425_2026_04_17_18.2.8_gitlab_backup.tar
+sudo docker exec -it rpi-gitlab-ce-web-1 gitlab-backup restore
+```
