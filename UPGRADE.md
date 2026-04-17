@@ -237,8 +237,8 @@ sudo chown jubilee2 1776397105_2026_04_17_17.11.7_gitlab_backup.tar
 ```bash
 scp 1776397105_2026_04_17_17.11.7_gitlab_backup.tar 192.168.1.91:~/
 # on target host:
-cp 1776397105_2026_04_17_17.11.7_gitlab_backup.tar /srv/gitlab/data/backups/
-docker exec -it rpi-gitlab-ce-web-1 chown git:git /var/opt/gitlab/backups/1776397105_2026_04_17_17.11.7_gitlab_backup.tar
+sudo cp 1776397105_2026_04_17_17.11.7_gitlab_backup.tar /srv/gitlab/data/backups/
+sudo docker exec -it rpi-gitlab-ce-web-1 chown git:git /var/opt/gitlab/backups/1776397105_2026_04_17_17.11.7_gitlab_backup.tar
 ```
 
 ### C) Restore that backup on target host
