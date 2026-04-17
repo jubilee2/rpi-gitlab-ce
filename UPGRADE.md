@@ -260,7 +260,7 @@ docker exec -it rpi-gitlab-ce-web-1 sh -lc 'GITLAB_ASSUME_YES=1 gitlab-backup re
 docker exec -t rpi-gitlab-ce-web-1 gitlab-backup create
 sudo docker cp rpi-gitlab-ce-web-1:/var/opt/gitlab/backups/1776400425_2026_04_17_18.2.8_gitlab_backup.tar .
 sudo chown jubilee2 1776400425_2026_04_17_18.2.8_gitlab_backup.tar
-scp 1776400425_2026_04_17_18.2.8_gitlab_backup.tar 192.168.1.91:~/
+scp 1776400425_2026_04_17_18.2.8_gitlab_backup.tar <local-machine-ip>:~/
 ```
 
 ### E) Final restore on destination machine
