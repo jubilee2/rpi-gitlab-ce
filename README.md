@@ -19,6 +19,8 @@ If you are running GitLab 17 on armhf hardware, you cannot perform an in-place u
 
 This architecture transition is another reason this repository is archived.
 
+For a Docker Compose step-by-step migration example, see [`UPGRADE.md`](UPGRADE.md).
+
 ## Background
 
 This project was based on the upstream GitLab Omnibus Docker setup:
