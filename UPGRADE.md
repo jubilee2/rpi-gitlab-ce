@@ -268,5 +268,5 @@ scp 1776400425_2026_04_17_18.2.8_gitlab_backup.tar <local-machine-ip>:~/
 ```bash
 sudo cp 1776400425_2026_04_17_18.2.8_gitlab_backup.tar /srv/gitlab/data/backups/
 sudo docker exec -it rpi-gitlab-ce-web-1 chown git:git /var/opt/gitlab/backups/1776400425_2026_04_17_18.2.8_gitlab_backup.tar
-sudo docker exec -it rpi-gitlab-ce-web-1 gitlab-backup restore
+sudo docker exec -it rpi-gitlab-ce-web-1 sh -lc 'GITLAB_ASSUME_YES=1 gitlab-backup restore BACKUP=1776400425_2026_04_17_18.2.8'
 ```
