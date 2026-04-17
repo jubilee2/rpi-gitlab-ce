@@ -1,16 +1,24 @@
-web:
-  image: 'jubilee2/rpi-gitlab-ce:latest'
-  platform: linux/arm/v7
-  restart: always
-  hostname: 'gitlab.example.com'
-  environment:
-    GITLAB_OMNIBUS_CONFIG: |
-      external_url 'https://gitlab.example.com'
-  ports:
-    - '80:80'
-    - '443:443'
-    - '22:22'
-  volumes:
-    - '/srv/gitlab/config:/etc/gitlab'
-    - '/srv/gitlab/logs:/var/log/gitlab'
-    - '/srv/gitlab/data:/var/opt/gitlab'
+services:
+  web:
+    image: 'gitlab/gitlab-ce:18.2.8-ce.0'
+    restart: always
+    hostname: 'gitlab.example.com'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.example.com'
+        ###! See https://docs.gitlab.com/omnibus/settings/rpi.html
+        ###! See also https://docs.gitlab.com/omnibus/settings/memory_constrained_envs/
+        # Reduce the number of running workers to the minimum in order to reduce memory usage
+        puma['worker_processes'] = 0
+        sidekiq['concurrency'] = 5
+        
+        # Turn off monitoring to reduce idle cpu and disk usage
+        prometheus_monitoring['enable'] = false
+    ports:
+      - '80:80'
+      - '443:443'
+      - '22:22'
+    volumes:
+      - '/srv/gitlab/config:/etc/gitlab'
+      - '/srv/gitlab/logs:/var/log/gitlab'
+      - '/srv/gitlab/data:/var/opt/gitlab'
